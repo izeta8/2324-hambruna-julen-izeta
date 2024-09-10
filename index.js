@@ -14,15 +14,22 @@ console.clear();
 // ---- ⬇️ UTILIDADES ⬇️ ---- //
 // --------------------------- //
 
-// Se le pasa la cantidad de azucar por parametro y de devuelve sin la 'g' final.
-function parseNutrition(sugar)
+// Se le pasa la cantidad de la nutrición por parametro y de devuelve sin la unidad o signo '%'
+function parseNutrition(nutrition)
 {
     // Si se pasa un valor null o undefined se retorna 0 porque daría error con substring.
-    if (!sugar) {return 0}
+    if (!nutrition) {return 0}
 
-    sugar = parseFloat(sugar.substring(0, sugar.length - 1));
-    return sugar;
+    if (isNumeric(nutrition)) {return nutrition}
+
+    nutrition = parseFloat(nutrition.substring(0, nutrition.length - 1));
+    return nutrition;
 }
+
+function isNumeric(str) {
+    return !isNaN(str) && !isNaN(parseFloat(str));
+}
+
 // ---------------------------//
 // ---- ⬇️ EJERCICIO ⬇️ ---- //
 // -------------------------- //
@@ -41,6 +48,10 @@ async function fetchJSON() {
         }
 
         const json = await response.json();
+
+        // -----------------------------//
+        // ---- ⬇️ ENUNCIADO 1 ⬇️ ---- //
+        // ---------------------------- //
 
         // 1.- Nuestro grupo se encuentra totalmente debilitado. Necesitamos tomar azúcares, hierro, proteínas y poca fibra. Para ello debemos preparar un conjuro que nos muestre:
 
@@ -135,54 +146,142 @@ async function fetchJSON() {
         
         if (sugarestItemsArray.length==1)
         {
-            console.log(`El donut con más azúcar es ${sugarestItemsArray[0].name}\n`);
+            console.log(`El donut con más azúcar es ${sugarestItemsArray[0].name}`);
         } 
             
         if (sugarestItemsArray.length>1)
         {
             let sugarestItemsNames = sugarestItemsArray.map(el => el.name); 
-            console.log(`Los donuts con más azúcar son ${sugarestItemsNames.join(", ")}\n`);
+            console.log(`Los donuts con más azúcar son ${sugarestItemsNames.join(", ")}`);
         }
         
         // Donut con más hierro (+ 50 exp)
         
         if (ironestItemsArray.length==1)
         {
-            console.log(`El donut con más hierro es ${ironestItemsArray[0].name}\n`);
+            console.log(`El donut con más hierro es ${ironestItemsArray[0].name}`);
         } 
         
         if (ironestItemsArray.length>1)
         {
             let ironestItemsNames = ironestItemsArray.map(el => el.name); 
-            console.log(`Los donuts con más hierro son ${ironestItemsNames.join(", ")}\n`);
+            console.log(`Los donuts con más hierro son ${ironestItemsNames.join(", ")}`);
         }
         
         // Donut con más proteína (+ 50 exp)
 
         if (proteinestItemsArray.length==1)
         {
-            console.log(`El donut con más proteína es ${ironestItemsArray[0].name}\n`);
+            console.log(`El donut con más proteína es ${ironestItemsArray[0].name}`);
         } 
         
         if (proteinestItemsArray.length>1)
         {
             let ironestItemsNames = ironestItemsArray.map(el => el.name); 
-            console.log(`Los donuts con más proteína son ${ironestItemsNames.join(", ")}\n`);
+            console.log(`Los donuts con más proteína son ${ironestItemsNames.join(", ")}`);
         }
         
         // Donut con menos fibra (+ 50 exp)
         
         if (fibrousestItemsArray.length==1)
         {
-            console.log(`El donut con más proteína es ${fibrousestItemsArray[0].name}\n`);
+            console.log(`El donut con más proteína es ${fibrousestItemsArray[0].name}`);
         } 
         
         if (fibrousestItemsArray.length>1)
         {
             let fibrousestItemsNames = fibrousestItemsArray.map(el => el.name); 
-            console.log(`Los donuts con más proteína son ${fibrousestItemsNames.join(", ")}\n`);
+            console.log(`Los donuts con más proteína son ${fibrousestItemsNames.join(", ")}`);
         }
         
+        // -----------------------------//
+        // ---- ⬇️ ENUNCIADO 2 ⬇️ ---- //
+        // ---------------------------- //
+
+        // 2.- Necesitamos saber si la ingesta de calorías, grasas y carbohidratos puede mellar nuestra agilidad por lo que necesitamos:
+        console.log("Necesitamos saber si la ingesta de calorías, grasas y carbohidratos puede mellar nuestra agilidad por lo que necesitamos:");
+
+        // Listar todos los donuts y sus calorías (+ 50 exp)
+        console.log("Listar todos los donuts y sus calorías (+ 50 exp)");
+        
+        json.items.item.forEach(item => {
+            console.log(`El donut '${item.name}' tiene ${item.nutrition_facts.nutrition.calories} calorias`)
+        });
+        
+        // Listar todos los donuts y sus carbohidratos (+ 50 exp)
+        console.log("\nListar todos los donuts y sus carbohidratos (+ 50 exp):");
+        
+        json.items.item.forEach(item => {
+            console.log(`El donut '${item.name}' tiene ${item.nutrition_facts.nutrition.carbohydrate.carbs_detail.amount} calorias`)
+        });
+        
+        // Mostrar la media de calorías de todos los donuts (+ 50 exp)
+        console.log("\nMostrar la media de calorías de todos los donuts (+ 50 exp):");
+        
+        let sumaCalorias = 0;
+
+        json.items.item.forEach(item => {
+            sumaCalorias += item.nutrition_facts.nutrition.calories;
+        });
+
+        let mediaCalorias = sumaCalorias / json.items.item.length;
+
+        console.log("La media de las calorias de todos los donuts es " + mediaCalorias );
+        
+        // Mostrar la suma de las grasas saturadas de todos los donuts (+ 50 exp)
+        
+        console.log("\nMostrar la suma de las grasas saturadas de todos los donuts (+ 50 exp)");
+        
+        let sumaGrasasSaturadas = 0;
+
+        json.items.item.forEach(item => {
+            sumaGrasasSaturadas += parseNutrition(item.nutrition_facts.nutrition.fat.fat_type.saturated);
+        });
+
+        console.log("La suma de las grasas saturadas de todos los donuts es de " + sumaGrasasSaturadas + " gramos");
+        
+        // Mostrar el porcentaje medio de cada vitamina (+ 50 exp)
+
+        console.log("\nMostrar el porcentaje medio de cada vitamina (+ 50 exp)");
+
+        let mediaVitaminas = [0, 0, 0, 0];
+
+        json.items.item.forEach(item => {
+
+            item.nutrition_facts.nutrition.vitamines.forEach((vitamina, index) => {
+                mediaVitaminas[index] += parseFloat(parseNutrition(vitamina.percent));
+            });
+
+        });
+
+        mediaVitaminas = mediaVitaminas.map(sumaVitaminas => {
+            return sumaVitaminas / json.items.item.length;
+        });
+        
+        for (let i = 0; i<mediaVitaminas.length; i++)
+        {
+
+            let nombreVitamina = "";
+            switch (i)
+            {
+                case 0:
+                    nombreVitamina = "Vitamin A";
+                    break
+                case 1:
+                    nombreVitamina = "Vitamin C";
+                    break
+                case 2:
+                    nombreVitamina = "Calcium";
+                    break
+                case 3:
+                    nombreVitamina = "Iron";
+                    break
+            }
+
+            console.log(`La media del portcentaje de la vitamina ${nombreVitamina} es de ${mediaVitaminas[i]}%`);
+
+        }
+
 
     } catch (error) {
         console.error(error.message);
