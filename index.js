@@ -41,7 +41,6 @@ async function fetchJSON() {
         }
 
         const json = await response.json();
-        console.log(json);
 
         // 1.- Nuestro grupo se encuentra totalmente debilitado. Necesitamos tomar azúcares, hierro, proteínas y poca fibra. Para ello debemos preparar un conjuro que nos muestre:
 
@@ -49,9 +48,13 @@ async function fetchJSON() {
 
         let sugarestItemsArray = [];
         let ironestItemsArray = [];
+        let proteinestItemsArray = [];
+        let fibrousestItemsArray = [];
 
         json.items.item.forEach(item => {
             
+            // -------------------- SUGAR -------------------------- / 
+
             let itemSugar = parseNutrition(item.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars);
             
             // Si el array 'sugarestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
@@ -69,7 +72,8 @@ async function fetchJSON() {
                 sugarestItemsArray.push(item);
             }
       
-            
+            // -------------------- IRON -------------------------- / 
+
             let itemIron = parseNutrition(item.nutrition_facts.nutrition.vitamines[3].percent);
 
             // Si el array 'ironestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
@@ -86,12 +90,48 @@ async function fetchJSON() {
             {
                 ironestItemsArray.push(item);
             }
+
+            // -------------------- PROTEINE -------------------------- / 
+
+            let itemProtein = parseNutrition(item.nutrition_facts.nutrition.proteine);
+
+            // Si el array 'ironestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
+            let maxProtein = proteinestItemsArray.length==0 ? 0 : parseNutrition(proteinestItemsArray[0].nutrition_facts.nutrition.proteine);
+
+            // console.log(`Item: ${item.name}. Cant: ${itemProtein}`);
+
+            if (itemProtein>maxProtein)
+            {
+                proteinestItemsArray = [item];
+            }
+
+            if (itemProtein==maxProtein)
+            {
+                proteinestItemsArray.push(item);
+            }
+
+            // -------------------- FIBRA -------------------------- / 
+
+            let itemFibra = parseNutrition(item.nutrition_facts.nutrition.proteine);
+
+            // Si el array 'ironestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
+            let maxFibra  = fibrousestItemsArray.length==0 ? 0 : parseNutrition(fibrousestItemsArray[0].nutrition_facts.nutrition.proteine);
+
+            // console.log(`Item: ${item.name}. Cant: ${itemFibra}`);
+
+            if (itemFibra>maxFibra)
+            {
+                fibrousestItemsArray = [item];
+            }
+
+            if (itemFibra==maxFibra)
+            {
+                fibrousestItemsArray.push(item);
+            }
             
         });
-
         
         // Donut con más azúcar (+ 50 exp)
-        console.log("Donut con más azúcar (+ 50 exp):\n");
         
         if (sugarestItemsArray.length==1)
         {
@@ -102,11 +142,9 @@ async function fetchJSON() {
         {
             let sugarestItemsNames = sugarestItemsArray.map(el => el.name); 
             console.log(`Los donuts con más azúcar son ${sugarestItemsNames.join(", ")}\n`);
-            
         }
         
         // Donut con más hierro (+ 50 exp)
-        console.log("Donut con más hierro (+ 50 exp):\n");
         
         if (ironestItemsArray.length==1)
         {
@@ -117,13 +155,33 @@ async function fetchJSON() {
         {
             let ironestItemsNames = ironestItemsArray.map(el => el.name); 
             console.log(`Los donuts con más hierro son ${ironestItemsNames.join(", ")}\n`);
-
         }
         
         // Donut con más proteína (+ 50 exp)
+
+        if (proteinestItemsArray.length==1)
+        {
+            console.log(`El donut con más proteína es ${ironestItemsArray[0].name}\n`);
+        } 
+        
+        if (proteinestItemsArray.length>1)
+        {
+            let ironestItemsNames = ironestItemsArray.map(el => el.name); 
+            console.log(`Los donuts con más proteína son ${ironestItemsNames.join(", ")}\n`);
+        }
         
         // Donut con menos fibra (+ 50 exp)
-
+        
+        if (fibrousestItemsArray.length==1)
+        {
+            console.log(`El donut con más proteína es ${fibrousestItemsArray[0].name}\n`);
+        } 
+        
+        if (fibrousestItemsArray.length>1)
+        {
+            let fibrousestItemsNames = fibrousestItemsArray.map(el => el.name); 
+            console.log(`Los donuts con más proteína son ${fibrousestItemsNames.join(", ")}\n`);
+        }
         
 
     } catch (error) {
