@@ -282,6 +282,36 @@ async function fetchJSON() {
 
         }
 
+        // -----------------------------//
+        // ---- ⬇️ ENUNCIADO 3 ⬇️ ---- //
+        // ---------------------------- //
+
+        // 3.- El horno a la leña de esta posada es de alta calidad, debemos lanzar un hechizo para saber qué tipo de masa utilizan
+        console.log("\n3.- El horno a la leña de esta posada es de alta calidad, debemos lanzar un hechizo para saber qué tipo de masa utilizan");
+
+        // Listar cada donut con sus posibles masas, batter (+ 50 exp)
+        console.log("\nListar cada donut con sus posibles masas, batter (+ 50 exp):\n");
+        
+        json.items.item.forEach(donut => {
+
+            let battersList = donut.batters.batter.map(batter => batter.type);
+
+            console.log(`Las posibles masas del donu ${donut.name} son: ${battersList.join(", ")}`);
+
+        });
+
+        // Listar cada donut con sus posibles extras topping (+ 50 exp)
+
+        console.log("\nListar cada donut con sus posibles extras topping (+ 50 exp):\n");
+        
+        json.items.item.forEach(donut => {
+
+            let toppingsList = donut.topping.map(topping => topping.type);
+
+            console.log(`Los posibles toppings del donut ${donut.name} son: ${toppingsList.join(", ")}`);
+
+        });
+
 
     } catch (error) {
         console.error(error.message);
