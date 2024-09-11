@@ -30,6 +30,10 @@ function isNumeric(str) {
     return !isNaN(str) && !isNaN(parseFloat(str));
 }
 
+function round(num) {
+    return Math.round(num * 100) / 100;
+}
+
 // ---------------------------//
 // ---- ⬇️ EJERCICIO ⬇️ ---- //
 // -------------------------- //
@@ -309,6 +313,32 @@ async function fetchJSON() {
             let toppingsList = donut.topping.map(topping => topping.type);
 
             console.log(`Los posibles toppings del donut ${donut.name} son: ${toppingsList.join(", ")}`);
+
+        });
+
+        // -----------------------------//
+        // ---- ⬇️ ENUNCIADO 4 ⬇️ ---- //
+        // ---------------------------- //
+
+        // 4.- Nuestro grupo sólo dispone de 4 monedas de plata.
+        console.log("\n4.- Nuestro grupo sólo dispone de 4 monedas de plata.");
+
+    	// Mostrar cuántos donuts de cada tipo podemos comprar y las monedas sobrantes. (+ 50 exp)
+        console.log("\nMostrar cuántos donuts de cada tipo podemos comprar y las monedas sobrantes. (+ 50 exp)\n");
+
+        json.items.item.forEach(donut => {
+            
+            let priceSum = 0;
+            let budget   = 4;
+
+            let amount = 0;
+            while (donut.ppu + priceSum<=budget)
+            {
+                priceSum+=donut.ppu;
+                amount++;
+            } 
+
+            console.log(`Puedes comprar ${amount} donuts ${donut.name} con ${budget} monedas. Te sobrarían ${round(budget-priceSum)}`);
 
         });
 
