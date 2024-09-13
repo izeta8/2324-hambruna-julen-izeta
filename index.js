@@ -80,7 +80,7 @@ function printSubTitle(subTitle)
         let sugarestItemsArray = [];
         let ironestItemsArray = [];
         let proteinestItemsArray = [];
-        let fibrousestItemsArray = [];
+        let lessFibrousItemsArray = [];
 
         json.items.item.forEach(item => {
             
@@ -143,21 +143,21 @@ function printSubTitle(subTitle)
 
             // -------------------- FIBRA -------------------------- / 
 
-            let itemFibra = parseNutrition(item.nutrition_facts.nutrition.proteine);
+            let itemFibre = parseNutrition(item.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.fibre);
 
-            // If the 'fibrousestItemsArray' array is empty, we return 0 because it's the first iteration and there is no value to read from the array
-            let maxFibra  = fibrousestItemsArray.length==0 ? 0 : parseNutrition(fibrousestItemsArray[0].nutrition_facts.nutrition.carbohydrate.carbs_detail.type.fibre);
+            // If the 'lessFibrousItemsArray' array is empty, we return 0 because it's the first iteration and there is no value to read from the array
+            let minFibra  = lessFibrousItemsArray.length==0 ? Infinity : parseNutrition(lessFibrousItemsArray[0].nutrition_facts.nutrition.carbohydrate.carbs_detail.type.fibre);
 
-            // console.log(`Item: ${item.name}. Cant: ${itemFibra}`);
+            // console.log(`Item: ${item.name}. Cant: ${itemFibre}`);
 
-            if (itemFibra>maxFibra)
+            if (itemFibre<minFibra)
             {
-                fibrousestItemsArray = [item];
+                lessFibrousItemsArray = [item];
             }
 
-            if (itemFibra==maxFibra)
+            if (itemFibre==minFibra)
             {
-                fibrousestItemsArray.push(item);
+                lessFibrousItemsArray.push(item);
             }
             
         });
@@ -207,15 +207,15 @@ function printSubTitle(subTitle)
         // Donut con menos fibra (+ 50 exp)
         printSubTitle("\nDonut con menos fibra (+ 50 exp)");
         
-        if (fibrousestItemsArray.length==1)
+        if (lessFibrousItemsArray.length==1)
         {
-            console.log(`El donut con más proteína es ${fibrousestItemsArray[0].name}`);
+            console.log(`El donut con menos fibra es ${lessFibrousItemsArray[0].name}`);
         } 
         
-        if (fibrousestItemsArray.length>1)
+        if (lessFibrousItemsArray.length>1)
         {
-            let fibrousestItemsNames = fibrousestItemsArray.map(el => el.name); 
-            console.log(`Los donuts con más proteína son ${fibrousestItemsNames.join(", ")}`);
+            let fibrousestItemsNames = lessFibrousItemsArray.map(el => el.name); 
+            console.log(`Los donuts con menos fibra son ${fibrousestItemsNames.join(", ")}`);
         }
         
         // ----------------------------//
