@@ -11,7 +11,7 @@
 console.clear();
 
 // ----------------------------//
-// ---- ⬇️ UTILIDADES ⬇️ ---- //
+// ---- ⬇️ UTILITIES ⬇️ ---- //
 // --------------------------- //
 
 // The amount of nutrition is passed as a parameter and it returns the value without the unit or '%' sign.
@@ -50,9 +50,9 @@ function printSubTitle(subTitle)
     console.log('\x1b[36m%s\x1b[0m', subTitle);
 }
 
-// ---------------------------//
-// ---- ⬇️ EJERCICIO ⬇️ ---- //
-// -------------------------- //
+// --------------------------//
+// ---- ⬇️ EXERSIZE ⬇️ ---- //
+// ------------------------- //
 
 
 // Asyncronous function to get the donuts JSON.
@@ -69,9 +69,9 @@ function printSubTitle(subTitle)
 
         const json = await response.json();
 
-        // -----------------------------//
-        // ---- ⬇️ ENUNCIADO 1 ⬇️ ---- //
-        // ---------------------------- //
+        // ----------------------------//
+        // ---- ⬇️ QUESTION 1 ⬇️ ---- //
+        // --------------------------- //
 
         // 1.- Nuestro grupo se encuentra totalmente debilitado. Necesitamos tomar azúcares, hierro, proteínas y poca fibra. Para ello debemos preparar un conjuro que nos muestre:
 
@@ -88,7 +88,7 @@ function printSubTitle(subTitle)
 
             let itemSugar = parseNutrition(item.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars);
             
-            // Si el array 'sugarestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
+            // If the 'sugarestItemsArray' array is empty, we return 0 because it's the first iteration and there is no value to read from the array
             let maxSugar = sugarestItemsArray.length==0 ? 0 : parseNutrition(sugarestItemsArray[0]?.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars);
 
             // console.log(`Item: ${item.name}. Cant: ${itemSugar}`);
@@ -107,7 +107,7 @@ function printSubTitle(subTitle)
 
             let itemIron = parseNutrition(item.nutrition_facts.nutrition.vitamines[3].percent);
 
-            // Si el array 'ironestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
+            // If the 'ironestItemsArray' array is empty, we return 0 because it's the first iteration and there is no value to read from the array
             let maxIron = ironestItemsArray.length==0 ? 0 : parseNutrition(ironestItemsArray[0].nutrition_facts.nutrition.vitamines[3].percent);
 
             // console.log(`Item: ${item.name}. Cant: ${itemIron}`);
@@ -126,7 +126,7 @@ function printSubTitle(subTitle)
 
             let itemProtein = parseNutrition(item.nutrition_facts.nutrition.proteine);
 
-            // Si el array 'ironestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
+            // If the 'proteinestItemsArray' array is empty, we return 0 because it's the first iteration and there is no value to read from the array
             let maxProtein = proteinestItemsArray.length==0 ? 0 : parseNutrition(proteinestItemsArray[0].nutrition_facts.nutrition.proteine);
 
             // console.log(`Item: ${item.name}. Cant: ${itemProtein}`);
@@ -145,8 +145,8 @@ function printSubTitle(subTitle)
 
             let itemFibra = parseNutrition(item.nutrition_facts.nutrition.proteine);
 
-            // Si el array 'ironestItemsArray' está vacío devolvemos 0 porque es la primera iteración y no hay ningun valor para leer en el array 
-            let maxFibra  = fibrousestItemsArray.length==0 ? 0 : parseNutrition(fibrousestItemsArray[0].nutrition_facts.nutrition.proteine);
+            // If the 'fibrousestItemsArray' array is empty, we return 0 because it's the first iteration and there is no value to read from the array
+            let maxFibra  = fibrousestItemsArray.length==0 ? 0 : parseNutrition(fibrousestItemsArray[0].nutrition_facts.nutrition.carbohydrate.carbs_detail.type.fibre);
 
             // console.log(`Item: ${item.name}. Cant: ${itemFibra}`);
 
@@ -218,9 +218,9 @@ function printSubTitle(subTitle)
             console.log(`Los donuts con más proteína son ${fibrousestItemsNames.join(", ")}`);
         }
         
-        // -----------------------------//
-        // ---- ⬇️ ENUNCIADO 2 ⬇️ ---- //
-        // ---------------------------- //
+        // ----------------------------//
+        // ---- ⬇️ QUESTION 2 ⬇️ ---- //
+        // --------------------------- //
 
         // 2.- Necesitamos saber si la ingesta de calorías, grasas y carbohidratos puede mellar nuestra agilidad por lo que necesitamos:
         printTitle("2.- Necesitamos saber si la ingesta de calorías, grasas y carbohidratos puede mellar nuestra agilidad por lo que necesitamos:");
@@ -306,9 +306,9 @@ function printSubTitle(subTitle)
 
         }
 
-        // -----------------------------//
-        // ---- ⬇️ ENUNCIADO 3 ⬇️ ---- //
-        // ---------------------------- //
+        // ----------------------------//
+        // ---- ⬇️ QUESTION 3 ⬇️ ---- //
+        // --------------------------- //
 
         // 3.- El horno a la leña de esta posada es de alta calidad, debemos lanzar un hechizo para saber qué tipo de masa utilizan
         printTitle("\n3.- El horno a la leña de esta posada es de alta calidad, debemos lanzar un hechizo para saber qué tipo de masa utilizan");
@@ -336,9 +336,9 @@ function printSubTitle(subTitle)
 
         });
 
-        // -----------------------------//
-        // ---- ⬇️ ENUNCIADO 4 ⬇️ ---- //
-        // ---------------------------- //
+        // ----------------------------//
+        // ---- ⬇️ QUESTION 4 ⬇️ ---- //
+        // --------------------------- //
 
         // 4.- Nuestro grupo sólo dispone de 4 monedas de plata.
         printTitle("\n4.- Nuestro grupo sólo dispone de 4 monedas de plata.");
@@ -362,9 +362,9 @@ function printSubTitle(subTitle)
 
         });
 
-        // -----------------------------//
-        // ---- ⬇️ ENUNCIADO 5 ⬇️ ---- //
-        // ---------------------------- //
+        // ----------------------------//
+        // ---- ⬇️ QUESTION 5 ⬇️ ---- //
+        // --------------------------- //
 
         // 5.- Para nuestro horror y preocupación hemos detectado grandes errores sintácticos en el conjuro original, es momento de poner nuestros conocimientos arcanos al servicio de toda la posada.
         
