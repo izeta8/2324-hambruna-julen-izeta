@@ -14,12 +14,13 @@ console.clear();
 // ---- ⬇️ UTILIDADES ⬇️ ---- //
 // --------------------------- //
 
-// Se le pasa la cantidad de la nutrición por parametro y de devuelve sin la unidad o signo '%'
+// The amount of nutrition is passed as a parameter and it returns the value without the unit or '%' sign.
 function parseNutrition(nutrition)
 {
-    // Si se pasa un valor null o undefined se retorna 0 porque daría error con substring.
+    // If a null or undefined value is passed, return 0 to avoid an error with substring.
     if (!nutrition) {return 0}
 
+    // If the nutrition value is already numeric, it means there are no non-digit characters. Return the original number.
     if (isNumeric(nutrition)) {return nutrition}
 
     nutrition = parseFloat(nutrition.substring(0, nutrition.length - 1));
@@ -28,10 +29,25 @@ function parseNutrition(nutrition)
 
 function isNumeric(str) {
     return !isNaN(str) && !isNaN(parseFloat(str));
-}
+}  
 
+// Rounds the given number to 2 decimals.
 function round(num) {
     return Math.round(num * 100) / 100;
+}
+
+function printTitle(title)
+{
+    console.log("\n\n====================================================\n");
+
+    // Dark blue, bold and underlined.
+    console.log('\x1b[34m\x1b[1m\x1b[4m%s\x1b[0m', title);
+}
+
+function printSubTitle(subTitle)
+{
+    // Cyan
+    console.log('\x1b[36m%s\x1b[0m', subTitle);
 }
 
 // ---------------------------//
@@ -39,8 +55,8 @@ function round(num) {
 // -------------------------- //
 
 
-// Función Asíncrona para obtener el JSON.
-async function fetchJSON() {
+// Asyncronous function to get the donuts JSON.
+(async () => {
 
     const url = "https://gist.githubusercontent.com/Oskar-Dam/62e7175dc542af53a9d18cb292422425/raw/a6cce2b68ea13a77ec5ea7bdfb4df8f23f9ae95f/donuts.json";
     
@@ -59,7 +75,7 @@ async function fetchJSON() {
 
         // 1.- Nuestro grupo se encuentra totalmente debilitado. Necesitamos tomar azúcares, hierro, proteínas y poca fibra. Para ello debemos preparar un conjuro que nos muestre:
 
-        console.log("1.- Nuestro grupo se encuentra totalmente debilitado. Necesitamos tomar azúcares, hierro, proteínas y poca fibra. Para ello debemos preparar un conjuro que nos muestre:\n");
+        printTitle("1.- Nuestro grupo se encuentra totalmente debilitado. Necesitamos tomar azúcares, hierro, proteínas y poca fibra. Para ello debemos preparar un conjuro que nos muestre:\n");
 
         let sugarestItemsArray = [];
         let ironestItemsArray = [];
@@ -147,7 +163,8 @@ async function fetchJSON() {
         });
         
         // Donut con más azúcar (+ 50 exp)
-        
+        printSubTitle("Donut con más azúcar (+ 50 exp)");
+
         if (sugarestItemsArray.length==1)
         {
             console.log(`El donut con más azúcar es ${sugarestItemsArray[0].name}`);
@@ -160,6 +177,7 @@ async function fetchJSON() {
         }
         
         // Donut con más hierro (+ 50 exp)
+        printSubTitle("\nDonut con más hierro (+ 50 exp)");
         
         if (ironestItemsArray.length==1)
         {
@@ -173,6 +191,7 @@ async function fetchJSON() {
         }
         
         // Donut con más proteína (+ 50 exp)
+        printSubTitle("\nDonut con más proteína (+ 50 exp)");
 
         if (proteinestItemsArray.length==1)
         {
@@ -186,6 +205,7 @@ async function fetchJSON() {
         }
         
         // Donut con menos fibra (+ 50 exp)
+        printSubTitle("\nDonut con menos fibra (+ 50 exp)");
         
         if (fibrousestItemsArray.length==1)
         {
@@ -203,24 +223,24 @@ async function fetchJSON() {
         // ---------------------------- //
 
         // 2.- Necesitamos saber si la ingesta de calorías, grasas y carbohidratos puede mellar nuestra agilidad por lo que necesitamos:
-        console.log("Necesitamos saber si la ingesta de calorías, grasas y carbohidratos puede mellar nuestra agilidad por lo que necesitamos:");
+        printTitle("2.- Necesitamos saber si la ingesta de calorías, grasas y carbohidratos puede mellar nuestra agilidad por lo que necesitamos:");
 
         // Listar todos los donuts y sus calorías (+ 50 exp)
-        console.log("Listar todos los donuts y sus calorías (+ 50 exp)");
+        printSubTitle("\nListar todos los donuts y sus calorías (+ 50 exp)\n");
         
         json.items.item.forEach(item => {
             console.log(`El donut '${item.name}' tiene ${item.nutrition_facts.nutrition.calories} calorias`)
         });
         
         // Listar todos los donuts y sus carbohidratos (+ 50 exp)
-        console.log("\nListar todos los donuts y sus carbohidratos (+ 50 exp):");
+        printSubTitle("\nListar todos los donuts y sus carbohidratos (+ 50 exp):");
         
         json.items.item.forEach(item => {
             console.log(`El donut '${item.name}' tiene ${item.nutrition_facts.nutrition.carbohydrate.carbs_detail.amount} calorias`)
         });
         
         // Mostrar la media de calorías de todos los donuts (+ 50 exp)
-        console.log("\nMostrar la media de calorías de todos los donuts (+ 50 exp):");
+        printSubTitle("\nMostrar la media de calorías de todos los donuts (+ 50 exp):");
         
         let sumaCalorias = 0;
 
@@ -234,7 +254,7 @@ async function fetchJSON() {
         
         // Mostrar la suma de las grasas saturadas de todos los donuts (+ 50 exp)
         
-        console.log("\nMostrar la suma de las grasas saturadas de todos los donuts (+ 50 exp)");
+        printSubTitle("\nMostrar la suma de las grasas saturadas de todos los donuts (+ 50 exp)");
         
         let sumaGrasasSaturadas = 0;
 
@@ -246,7 +266,7 @@ async function fetchJSON() {
         
         // Mostrar el porcentaje medio de cada vitamina (+ 50 exp)
 
-        console.log("\nMostrar el porcentaje medio de cada vitamina (+ 50 exp)");
+        printSubTitle("\nMostrar el porcentaje medio de cada vitamina (+ 50 exp)");
 
         let mediaVitaminas = [0, 0, 0, 0];
 
@@ -291,10 +311,10 @@ async function fetchJSON() {
         // ---------------------------- //
 
         // 3.- El horno a la leña de esta posada es de alta calidad, debemos lanzar un hechizo para saber qué tipo de masa utilizan
-        console.log("\n3.- El horno a la leña de esta posada es de alta calidad, debemos lanzar un hechizo para saber qué tipo de masa utilizan");
+        printTitle("\n3.- El horno a la leña de esta posada es de alta calidad, debemos lanzar un hechizo para saber qué tipo de masa utilizan");
 
         // Listar cada donut con sus posibles masas, batter (+ 50 exp)
-        console.log("\nListar cada donut con sus posibles masas, batter (+ 50 exp):\n");
+        printSubTitle("\nListar cada donut con sus posibles masas, batter (+ 50 exp):\n");
         
         json.items.item.forEach(donut => {
 
@@ -306,7 +326,7 @@ async function fetchJSON() {
 
         // Listar cada donut con sus posibles extras topping (+ 50 exp)
 
-        console.log("\nListar cada donut con sus posibles extras topping (+ 50 exp):\n");
+        printSubTitle("\nListar cada donut con sus posibles extras topping (+ 50 exp):\n");
         
         json.items.item.forEach(donut => {
 
@@ -321,10 +341,10 @@ async function fetchJSON() {
         // ---------------------------- //
 
         // 4.- Nuestro grupo sólo dispone de 4 monedas de plata.
-        console.log("\n4.- Nuestro grupo sólo dispone de 4 monedas de plata.");
+        printTitle("\n4.- Nuestro grupo sólo dispone de 4 monedas de plata.");
 
     	// Mostrar cuántos donuts de cada tipo podemos comprar y las monedas sobrantes. (+ 50 exp)
-        console.log("\nMostrar cuántos donuts de cada tipo podemos comprar y las monedas sobrantes. (+ 50 exp)\n");
+        printSubTitle("\nMostrar cuántos donuts de cada tipo podemos comprar y las monedas sobrantes. (+ 50 exp)\n");
 
         json.items.item.forEach(donut => {
             
@@ -342,11 +362,88 @@ async function fetchJSON() {
 
         });
 
+        // -----------------------------//
+        // ---- ⬇️ ENUNCIADO 5 ⬇️ ---- //
+        // ---------------------------- //
+
+        // 5.- Para nuestro horror y preocupación hemos detectado grandes errores sintácticos en el conjuro original, es momento de poner nuestros conocimientos arcanos al servicio de toda la posada.
+        
+        printTitle("\n5.- Para nuestro horror y preocupación hemos detectado grandes errores sintácticos en el conjuro original, es momento de poner nuestros conocimientos arcanos al servicio de toda la posada.");
+
+        // Los donuts con el colesterol > 12 modificar las grasas trans a 3,2 gr (+ 50 exp)
+        console.log("\nLos donuts con el colesterol > 12 modificar las grasas trans a 3,2 gr (+ 50 exp)\n");
+        
+        json.items.item = json.items.item.map(donut => {
+           
+            if (parseNutrition(donut.nutrition_facts.nutrition.cholesterol.daily_value) > 12) {
+                donut.nutrition_facts.nutrition.fat.fat_type.trans = "3.2 gr";
+            }
+
+            return donut;
+        });
+
+        // Donuts con azúcar > 50  modificar el amount de los detalles de carbohidratos a 42gr (+ 50 exp)
+        printSubTitle("\nDonuts con azúcar > 50  modificar el amount de los detalles de carbohidratos a 42gr (+ 50 exp)\n");
+
+        json.items.item = json.items.item.map(donut => {
+           
+            if (parseNutrition(donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars) > 50) {
+                donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.amount = '42gr';
+
+                console.log(`El donut ${donut.name} que tiene ${donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars} gr de azucar, se le ha cambiado el amount de los detalles de carbohidratos a ${donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.amount}`);
+            }
+
+
+            return donut;
+        });
+
+        // Añadir una vitamina llamada "Nitacina" al donut con el nombre "Magic Fusion" (+ 50 exp)
+        printSubTitle('\nAñadir una vitamina llamada "Nitacina" al donut con el nombre "Magic Fusion" (+ 50 exp)\n');
+
+        json.items.item = json.items.item.map(donut => {
+
+            if (donut.name == "Magic Fusion") {
+                donut.nutrition_facts.nutrition.vitamines.push({
+                    type: "Nitacina",
+                    percent: undefined
+                });
+
+                console.log(donut.name);
+                console.log(donut.nutrition_facts.nutrition.vitamines);
+                console.log("\n--------------------- \n");
+            }
+            
+
+            return donut;
+        });
+
+        // El daily value de los carbohidratos de todos los donuts va a ser de 53% (+ 50 exp)
+        printSubTitle('\nEl daily value de los carbohidratos de todos los donuts va a ser de 53% (+ 50 exp)\n');
+        
+        json.items.item = json.items.item.map(donut => {
+
+            donut.nutrition_facts.nutrition.carbohydrate.daily_value = "53%";
+
+            return donut;
+        });
+        
+        // Crearle un nuevo atributo "Alergen" al donut llamado "Relaxing Alchemy" y que dentro de el ponga "Gluten Free" (+ 50 exp)
+
+        printSubTitle('\nCrearle un nuevo atributo "Alergen" al donut llamado "Relaxing Alchemy" y que dentro de el ponga "Gluten Free" (+ 50 exp)\n');
+        
+        json.items.item = json.items.item.map(donut => {
+        
+            if (donut.name == "Relaxing Alchemy")
+            {
+                donut.alergen = "Gluten Free";
+            }
+
+            return donut;
+        });
 
     } catch (error) {
         console.error(error.message);
         console.error(error.stack);
     }
-}
 
-fetchJSON();
+})();
