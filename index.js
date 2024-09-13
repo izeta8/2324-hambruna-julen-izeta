@@ -302,7 +302,7 @@ function printSubTitle(subTitle)
                     break
             }
 
-            console.log(`La media del portcentaje de la vitamina ${nombreVitamina} es de ${mediaVitaminas[i]}%`);
+            console.log(`La media del porcentaje de la vitamina ${nombreVitamina} es de ${mediaVitaminas[i]}%`);
 
         }
 
@@ -320,7 +320,7 @@ function printSubTitle(subTitle)
 
             let battersList = donut.batters.batter.map(batter => batter.type);
 
-            console.log(`Las posibles masas del donu ${donut.name} son: ${battersList.join(", ")}`);
+            console.log(`Las posibles masas del donut ${donut.name} son: ${battersList.join(", ")}`);
 
         });
 
@@ -358,7 +358,7 @@ function printSubTitle(subTitle)
                 amount++;
             } 
 
-            console.log(`Puedes comprar ${amount} donuts ${donut.name} con ${budget} monedas. Te sobrarían ${round(budget-priceSum)}`);
+            console.log(`Puedes comprar ${amount} donuts ${donut.name} (PPU: ${donut.ppu}) con ${budget} monedas. Te sobrarían ${round(budget-priceSum)}`);
 
         });
 
@@ -371,12 +371,14 @@ function printSubTitle(subTitle)
         printTitle("\n5.- Para nuestro horror y preocupación hemos detectado grandes errores sintácticos en el conjuro original, es momento de poner nuestros conocimientos arcanos al servicio de toda la posada.");
 
         // Los donuts con el colesterol > 12 modificar las grasas trans a 3,2 gr (+ 50 exp)
-        console.log("\nLos donuts con el colesterol > 12 modificar las grasas trans a 3,2 gr (+ 50 exp)\n");
+        printSubTitle("\nLos donuts con el colesterol > 12 modificar las grasas trans a 3,2 gr (+ 50 exp)\n");
         
         json.items.item = json.items.item.map(donut => {
            
             if (parseNutrition(donut.nutrition_facts.nutrition.cholesterol.daily_value) > 12) {
                 donut.nutrition_facts.nutrition.fat.fat_type.trans = "3.2 gr";
+
+                console.log(`Al donut ${donut.name} que tiene más de 12 de colesterol, se le han cambiado las grasas trans a 3,2 gramos.`);
             }
 
             return donut;
@@ -390,7 +392,7 @@ function printSubTitle(subTitle)
             if (parseNutrition(donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars) > 50) {
                 donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.amount = '42gr';
 
-                console.log(`El donut ${donut.name} que tiene ${donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars} gr de azucar, se le ha cambiado el amount de los detalles de carbohidratos a ${donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.amount}`);
+                console.log(`Al donut ${donut.name} que tiene ${donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.type.sugars} gr de azucar, se le ha cambiado el amount de los detalles de carbohidratos a ${donut.nutrition_facts.nutrition.carbohydrate.carbs_detail.amount}`);
             }
 
 
@@ -423,6 +425,7 @@ function printSubTitle(subTitle)
         json.items.item = json.items.item.map(donut => {
 
             donut.nutrition_facts.nutrition.carbohydrate.daily_value = "53%";
+            console.log(`Al donut ${donut.name}, se le ha cambiado el daily value de los carbohidratos a ${donut.nutrition_facts.nutrition.carbohydrate.daily_value}`);
 
             return donut;
         });
